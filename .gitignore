@@ -74,3 +74,9 @@ hw4_tests/
 equal-paths-test
 bst-test
 
+.clang-format
+.clang-tidy
+avlbst.h.gch
+bst.h.gch
+equal-paths.h.gch
+print_bst.h.gch
