@@ -340,63 +340,6 @@ BinarySearchTree<Key, Value>::iterator::operator++()
     *this = fin;   
     return *this;
 
-    // Node<Key, Value>* temp;
-    // BinarySearchTree<Key, Value>::iterator end(nullptr);
-
-    // //Root
-    // if(this->getParent() == nullptr){    
-
-    //     if(this->getRight() == nullptr){  
-    //         return end;        
-    //     }else{
-    //         temp = this->getRight();
-
-    //         //While there is a left child, go to it
-    //         while(temp->getLeft() != nullptr){
-    //             temp = this->getLeft();
-    //         }
-    //         //Temp should be left most child of right subtree
-    //     }
-    // }    
-
-    // //Is a left child? (smaller than parent)
-    // if(this->getKey() < this->getParent().getKey()){
-    //     temp = this->getParent();
-    //     //return BinarySearchTree<Key, Value>::iterator(this->getParent());
-    // }
-
-    // //If node is Right child and Leaf node? go to grandparent that is right child
-    // if(this->getRight() == nullptr && this->getLeft() == nullptr){
-    //     temp = this->getParent()->getParent();
-
-    //     //While still a right child
-    //     while(temp > temp->getParent()){
-    //         temp = temp->getParent()
-    //     }
-
-    //     temp = temp->getParent();
-    //     //Temp is the parent of the first grandparent that is a left child
-
-    //     if(temp == nullptr){
-    //         return end;
-    //     }
-    //     // else{
-    //     //     return BinarySearchTree<Key, Value>::iterator(temp);
-    //     // }        
-    // }
-
-    // //Has a Right child?
-    // if(this->getRight() != nullptr){
-    //     temp = this->getRight();
-
-    //     //While there is a left child, go to it
-    //     while(temp->getLeft() != nullptr){
-    //         temp = this->getLeft();
-    //     }
-    //     //Temp should be left most child of right subtree
-    // }
-
-    // return BinarySearchTree<Key, Value>::iterator(temp);    
 }
 
 
@@ -506,48 +449,34 @@ void BinarySearchTree<Key, Value>::insert(const std::pair<const Key, Value> &key
 	//Keep comparing with node values until you become a leaf
 
 	if(root_ == nullptr){//If BST is empty
-			//Node<Key, Value> pair(keyValuePair.first, keyValuePair.second, nullptr);
-			root_ = new Node<Key, Value>(keyValuePair.first, keyValuePair.second, nullptr);
-			//std::cout << "New tree created. Root: " << root_->getKey() << std::endl;
-			return;
+        root_ = new Node<Key, Value>(keyValuePair.first, keyValuePair.second, nullptr);
+        return;
 	}
 	Node<Key, Value>* temp = root_;
 	//Make a node pointer from &keyValuePair
 
-
 	while(1){
-			if( temp->getKey() > keyValuePair.first ){//If temp's key is less than new node's key
-					if(temp->getLeft() != nullptr){//If there is a left child
-						temp = temp->getLeft();//Set temp to left child
-					}else{//Set it as child				
-						Node<Key, Value>* newNode = new  Node<Key, Value>(keyValuePair.first, keyValuePair.second, temp);
-						temp->setLeft(newNode);//Set the current node as the parent of the new node
-						break;
-					}
-			}else if(temp->getKey() < keyValuePair.first ){
-					//std::cout << "Potential Parent: " << temp->getKey() << " " << temp->getValue() << std::endl;
-					// if(temp != nullptr){
-					// 	std::cout << "Temp is not nullptr\n";
-					// }
-					//auto x = temp->getRight();
-					//std::cout << x << std::endl;
-					if(temp->getRight() != nullptr){//Look at right child
-						//std::cout << "Current node's right child is "<< temp->getRight()->getKey() << std::endl;
-						temp = temp->getRight();
-					}else{//Set it as child						
-						Node<Key, Value>* newNode = new  Node<Key, Value>(keyValuePair.first, keyValuePair.second, temp);
-						temp->setRight(newNode);
-						//std::cout << "New node is a right child of " << newNode->getParent()->getKey() << ". New node is " << temp->getRight()->getKey() << std::endl;
-						//print();
-						break;
-					}
-			}else{
-					//std::cout << "Setting new value because key is in tree\n";
-					temp->setValue(keyValuePair.second);//Change the value of the Node with the same key
-					break;
-			}
+        if( temp->getKey() > keyValuePair.first ){//If temp's key is less than new node's key
+            if(temp->getLeft() != nullptr){//If there is a left child
+                temp = temp->getLeft();//Set temp to left child
+            }else{//Set it as child				
+                Node<Key, Value>* newNode = new  Node<Key, Value>(keyValuePair.first, keyValuePair.second, temp);
+                temp->setLeft(newNode);//Set the current node as the parent of the new node
+                break;
+            }
+        }else if(temp->getKey() < keyValuePair.first ){
+            if(temp->getRight() != nullptr){//Look at right child
+                temp = temp->getRight();
+            }else{//Set it as child						
+                Node<Key, Value>* newNode = new  Node<Key, Value>(keyValuePair.first, keyValuePair.second, temp);
+                temp->setRight(newNode);
+                break;
+            }
+        }else{
+                temp->setValue(keyValuePair.second);//Change the value of the Node with the same key
+                break;
+        }
 	}
-
 }
 
 
@@ -713,10 +642,6 @@ BinarySearchTree<Key, Value>::successor(Node<Key, Value>* current){
 					if(current->getParent() == nullptr){
 						return nullptr;
 					}
-					// if(current == nullptr){
-					// 		//BinarySearchTree<Key, Value>::iterator end(nullptr);
-					// 		return nullptr;//If parent doesn't exist (root) return nullptr
-					// }
 			}
 			
 			current = current->getParent();
